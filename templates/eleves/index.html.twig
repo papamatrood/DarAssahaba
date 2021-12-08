@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Eleves index{% endblock %}
+
+{% block body %}
+<div class="container">
+    <h3 class="text-center display-3">قائمة الطلاب</h3>
+
+    <a href="{{ path('eleves_new') }}" class="btn btn-primary mb-3">أضف طالبًا جديدًا</a>
+    
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>الاسم الأول</th>
+                <th>اسم العائلة</th>
+                <th>تاريخ الميلاد (العمر)</th>
+                <th>أزرار الإجراءات</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for elefe in eleves %}
+            <tr>
+                <td>{{ elefe.id }}</td>
+                <td>{{ elefe.firstName }}</td>
+                <td>{{ elefe.name }}</td>
+                <td>{{ elefe.birthDayAt ? elefe.birthDayAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>
+                    <a href="{{ path('eleves_show', {'id': elefe.id}) }}">ارى</a>
+                    <a href="{{ path('eleves_edit', {'id': elefe.id}) }}">للتعديل</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">لا توجد سجلات</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    </div>
+    
+{% endblock %}

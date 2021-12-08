@@ -1,0 +1,19 @@
+{{ form_start(form) }}
+        <form>
+        <div class="row">
+          <div class="col-md-4">
+            {{ form_row(form.firstName, {'label': 'الاسم الأول'}) }}
+          </div>
+          <div class="col-md-4">
+            {{ form_row(form.name, {'label': 'اسم العائلة'}) }}
+          </div>
+          <div class="col-md-4">
+            {{ form_row(form.birthDayAt, {'label': 'تاريخ الميلاد (العمر)'}) }}
+            </div>
+          </div>
+            <div class="col-12">
+                <button class="btn btn-primary">{{ button_label|default('يحفظ') }}</button>
+            </div>
+          </div>
+        </form>
+{{ form_end(form) }}
