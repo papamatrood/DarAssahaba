@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}قائمة الطلاب{% endblock %}
+
+{% block body %}
+<div class="container">
+    <h3 class="text-center display-3">قائمة الطلاب</h3>
+
+    <a href="{{ path('student_new') }}" class="btn btn-primary mb-3">أضف طالبًا جديدًا</a>
+    
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>الاسم الأول</th>
+                <th>اسم العائلة</th>
+                <th>تاريخ الميلاد (العمر)</th>
+                <th>أزرار الإجراءات</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for student in students %}
+            <tr>
+                <td>{{ student.id }}</td>
+                <td>{{ student.firstName }}</td>
+                <td>{{ student.name }}</td>
+                <td>{{ student.birthDayAt ? student.birthDayAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>
+                    <a class="btn btn-primary" href="{{ path('student_edit', {'id': student.id}) }}">للتعديل</a>
+                    <form style="display: inline;" method="post" action="{{ path('student_delete', {'id': student.id}) }}" onsubmit="return confirm('هل أنت متأكد أنك تريد حذف هذا البند؟');">
+                        <button class="btn btn-danger text-white">حذف</button>
+                    </form>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">لا توجد سجلات</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    </div>
+    
+{% endblock %}

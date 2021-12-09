@@ -2,11 +2,10 @@
 <html lang="ar" dir="rtl">
     <head>
         <meta charset="UTF-8">
-        <title>{% block title %} ! مرحبا بكم في دار الصحابة{% endblock %}</title>
+        <title>{% block title %}! مرحبا بكم في دار الصحابة{% endblock %}</title>
         <link href="{{ asset('css/bootstrap.min.css') }}" type="text/css" rel="stylesheet" /> 
-        <link href="{{ asset('css/style.css') }}" type="text/css" rel="stylesheet" />                
-        <script src="{{ asset('js/bootstrap.min.js') }}" defer></script>                
-        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css">
+        <link href="{{ asset('css/style.css') }}" type="text/css" rel="stylesheet" />       
+        <script src="{{ asset('js/bootstrap.min.js') }}" defer></script>      
         {% block stylesheets %}
           
         <style>
@@ -44,27 +43,30 @@
             <nav class="navbar navbar-expand-sm bg-info navbar-dark navigation">
                 <ul class="navbar-nav mx-auto">
                     <li class="nav-item">
-                        <a class="nav-link active" href="#">Active</a>
+                        <a class="nav-link active" href="{{ path('home') }}">الصفحة الرئيسية</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Link</a>
-                    </li>
-                    <li class="nav-item">
-                     <a class="nav-link" href="#">Link</a>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                            تعليم
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                            <li><a class="dropdown-item" href="{{ path('student_index') }}">رسوم التعليم</a></li>
+                        </ul>
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
                             تلاميذ
                         </a>
-
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                            <li><a class="dropdown-item" href="{{ path('eleves_index') }}">قائمة الطلاب</a></li>
-                            <li><a class="dropdown-item" href="{{ path('eleves_new') }}">أضف طالبًا جديدًا</a></li>
+                            <li><a class="dropdown-item" href="{{ path('student_index') }}">قائمة الطلاب</a></li>
+                            <li><a class="dropdown-item" href="{{ path('student_new') }}">أضف طالبًا جديدًا</a></li>
                         </ul>
                     </li>
+                    {#
                     <li class="nav-item">
                         <a class="nav-link disabled" href="#">Disabled</a>
                     </li>
+                    #}
                 </ul>
             </nav>
         </div>
