@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}قائمة المدفوعات{% endblock %}
+
+{% block body %}
+<div class="container">
+    <h3 class="text-center display-3">قائمة الطلاب الذين دفعوا ثمن شهر : </h3>
+    <div class="row">
+        <div class="col-md-2">
+            <ul class="list-group">
+                <li class="list-group-item bg-primary text-white fw-bold">الاشهر</li>
+                {% for month in months %}
+                <li class="list-group-item">
+                    <a href="">#{{ loop.index }} {{ month }}</a>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="col-md-10">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Libelle</th>
+                        <th>IsPaye</th>
+                        <th>StudentId</th>
+                        <th>actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for paiement in paiements %}
+                    <tr>
+                        <td>{{ paiement.id }}</td>
+                        <td>{{ paiement.libelle }}</td>
+                        <td>{{ paiement.isPaye ? 'Yes' : 'No' }}</td>
+                        <td>{{ paiement.studentId }}</td>
+                        <td>
+                            <a href="{{ path('paiement_show', {'id': paiement.id}) }}">show</a>
+                            <a href="{{ path('paiement_edit', {'id': paiement.id}) }}">edit</a>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="5">لا توجد سجلات</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <a href="{{ path('paiement_new') }}">Create new</a>
+    </div>
+{% endblock %}
