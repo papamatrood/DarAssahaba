@@ -10,3 +10,7 @@ nav.navigation {
 ul.navbar-nav > li {
     margin: 0 5rem;
 }
+
+.true-false-image {
+    width: 9%;
+}

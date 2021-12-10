@@ -25,7 +25,7 @@ class Paiement
     /**
      * @ORM\Column(type="boolean")
      */
-    private $isPaye;
+    private $isPaye = false;
 
     /**
      * @ORM\Column(type="integer")

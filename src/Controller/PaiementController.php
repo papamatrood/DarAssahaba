@@ -5,6 +5,8 @@ namespace App\Controller;
 use App\Entity\Paiement;
 use App\Form\PaiementType;
 use App\Repository\PaiementRepository;
+use App\Repository\StudentRepository;
+use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,24 +19,58 @@ use Symfony\Component\Routing\Annotation\Route;
 class PaiementController extends AbstractController
 {
 
+    private $thisYear;
     private $months;
+    private $paiementRepo;
 
-    function __construct()
+    function __construct(PaiementRepository $paiementRepo)
     {
+        $this->paiementRepo = $paiementRepo;
+        $this->thisYear = date('Y');
         $this->months = [
-            'Janvier','Février','Mars','Avril','Mai','Juin', 
-            'Juillet','Août','Septambre','Octobre','Novembre','Décembre', 
+            'Janvier' ,  'Février' , 'Mars'      , 'Avril'   ,  'Mai'     , 'Juin'      , 
+            'Juillet' ,  'Août'    , 'Septambre' , 'Octobre' ,  'Novembre', 'Décembre'  , 
         ];
     }
 
     /**
-     * @Route("/", name="paiement_index", methods={"GET"})
+     * @Route("/", name="paiement_index", methods={"GET", "POST"})
+     * @Route("/month/{month}", name="paiement_month", methods={"GET", "POST"})
      */
-    public function index(PaiementRepository $paiementRepository): Response
-    {
+    public function index(Request $request, StudentRepository $StudentRepo, ?string $month = null): Response
+    {   
+        $year = (int) $this->thisYear;
+        $m = (int) date('n') - 1;
+        $mois = $this->months[$m] . ' - ' . $year;
+
+        if ($request->isMethod('GET') && ($request->query->get('year') != null)) {
+            $year = $request->query->get('year');
+        }elseif (!is_null($month)) {
+            $year = (int) explode(' - ', $month)[1];
+            $mois = $month;
+        }
+        
+
+        $years = [];
+        for ($i=0; $i < 5 ; $i++) { 
+            $years[] = (int) $this->thisYear - $i; 
+        }
+
+        $months = [];
+
+        foreach ($this->months as $value) {
+            $months[] = $value . ' - ' . $year;
+        }
+
+        $students = $StudentRepo->findAll();
+
         return $this->render('paiement/index.html.twig', [
-            'months' => $this->months,
-            'paiements' => $paiementRepository->findAll(),
+            'years' => $years,
+            'months' => $months,
+            'year' => $year,
+            'students' => $students,
+            'mois' => $mois,
+            //'paiements' => $this->paiementRepo->findAll(),
         ]);
     }
 
